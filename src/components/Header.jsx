@@ -1,4 +1,4 @@
-import { SunIcon, MoonIcon } from '@radix-ui/react-icons'
+import { SunIcon, MoonIcon, GearIcon } from '@radix-ui/react-icons'
 import { useTheme } from '../utils/context/ThemeProvider'
 import { useAuth } from '../utils/context/AuthContext'
 
@@ -10,7 +10,10 @@ export default function Header() {
             <h1 className='text-2xl font-display font-semibold text-neutral-800 dark:text-neutral-200'>
                 Hyperlinked
             </h1>
-            <div className="flex flex-row">
+            <div className="flex flex-row items-center">
+                <a href='/settings' className='mr-2 text-neutral-800 dark:text-neutral-200'>
+                    <GearIcon />
+                </a>
                 <button className='mr-4 text-neutral-800 dark:text-neutral-200' onClick={() => toggleTheme()}>
                     <i>
                         {darkMode ? <SunIcon /> : <MoonIcon />}

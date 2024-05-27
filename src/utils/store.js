@@ -11,4 +11,12 @@ export const useDatastore = (set, get) => ({
   setSnackbarMessage: (message) => {
     set({ snackbarMessage: message });
   },
+  createNewFolder: (name) => {
+    set((state) => ({
+      bookmarks: {
+        [name]: [],
+        ...state.bookmarks,
+      },
+    }));
+  },
 });

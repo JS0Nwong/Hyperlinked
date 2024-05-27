@@ -1,7 +1,7 @@
 import { Fieldset, Field, Input, Label, Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import SelectComponent from './Select'
 import { useBoundStore } from '../utils/storeBinder'
-import { Cross2Icon,PlusIcon } from '@radix-ui/react-icons'
+import { Cross2Icon } from '@radix-ui/react-icons'
 
 export default function CreateBookmarkForm({ isOpen, onClose }) {
     const { setBookmarks } = useBoundStore()
@@ -23,6 +23,7 @@ export default function CreateBookmarkForm({ isOpen, onClose }) {
             return urlObj.toString();
         }
         const url = document.getElementById('url-input').value
+        const title = document.getElementById('title-input').value.trim()
 
         if (!url) {
             alert('Please enter a URL');
@@ -69,10 +70,7 @@ export default function CreateBookmarkForm({ isOpen, onClose }) {
                                         <Label className="text-sm/6 font-medium text-neutral-600 dark:text-neutral-400">Group</Label>
                                         <div className='flex flex-row items-end'>
                                             <SelectComponent />
-                                            <button className=" py-[9px] px-2 text-neutral-800 dark:text-neutral-200 bg-neutral-200 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 transition-all" >
-                                                <PlusIcon />
-                                            </button>
-                                            <button className="py-[9px] px-2 rounded-r text-neutral-800 dark:text-neutral-200  bg-neutral-200 dark:bg-neutral-700 hover:bg-red-600 transition-all">
+                                            <button className="py-[9.5px] px-2 rounded-r text-neutral-800 dark:text-neutral-200  bg-neutral-200 dark:bg-neutral-700 hover:bg-red-600 transition-all">
                                                 <Cross2Icon />
                                             </button>
                                         </div>
