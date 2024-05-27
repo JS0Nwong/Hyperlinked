@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
 import { useBoundStore } from '../utils/storeBinder'
-import { ChevronDownIcon } from '@radix-ui/react-icons'
+import { ChevronDownIcon, CheckIcon } from '@radix-ui/react-icons'
 
 export default function SelectComponent() {
     const { bookmarks } = useBoundStore((state) => ({ bookmarks: state.bookmarks }))
@@ -24,14 +24,16 @@ export default function SelectComponent() {
             </ListboxButton>
             <ListboxOptions 
                 anchor="bottom"
-                className="z-50 w-[var(--button-width)] last:rounded-b rounded-t-none border border-white/5 bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 px-3 py-1.5 [--anchor-gap:var(--spacing-1)] focus:outline-none text-sm"
+                className="z-50 w-[var(--button-width)] last:rounded-b-md rounded-t-none border border-white/5 bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 px-3 py-1.5 [--anchor-gap:var(--spacing-1)] focus:outline-none text-sm"
             >
                 {keys.map((key) => (
                     <ListboxOption 
                         key={key} 
                         value={key} 
+                        className="group flex cursor-default items-center justify-between py-2.5 px-3 rounded-md select-none data-[focus]:bg-white/10"
                     >
                         {key}
+                        <CheckIcon className="invisible size-4 fill-white group-data-[selected]:visible" />
                     </ListboxOption>
                 ))}
             </ListboxOptions>

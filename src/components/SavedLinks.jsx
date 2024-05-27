@@ -24,7 +24,7 @@ export default function SavedLinks({ data, index, focused, setFocused, hovered, 
                 <img className="w-4 h-4 mr-2 ml-2 md:ml-4" src={favIcon} />
                 <p className='w-full text-neutral-800 text-sm font-medium ml-1 mr-1 dark:text-neutral-200 text-nowrap text-ellipsis overflow-hidden' >
                     {data.description}</p>
-                <p className='text-neutral-500 ml-2 mr-2 md:mr-4 text-xs' >
+                <p className='text-neutral-500 mx-2 md:mr-4 text-xs' >
                     {displayLink}
                 </p>
                 {focused === index ? (

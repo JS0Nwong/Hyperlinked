@@ -57,8 +57,8 @@ export default function LinksDisplay() {
               ))
               :
               <button
-                className='w-full bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-300 dark:hover:bg-neutral-700 transition-colors rounded-md py-3 px-1.5 text-sm font-medium mt-2 flex items-center justify-center'>
-                {key} {bookmarks[key].length}
+                className='w-full bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-300 dark:hover:bg-neutral-700 transition-colors rounded-md py-3 px-4 mt-2 flex items-center justify-between'>
+                <p className='text-sm font-medium'>{key}</p> <p className='text-neutral-500 text-xs '>{bookmarks[key].length} items</p>
               </button>
           ))}
         </AnimatePresence>
