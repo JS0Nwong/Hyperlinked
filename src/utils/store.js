@@ -1,22 +1,43 @@
 export const useDatastore = (set, get) => ({
-  bookmarks: { uncategorized: [] },
+  bookmarks: {
+    uncategorized: {
+      saved: [],
+      properties: {
+        visibility: true,
+        color: 'White',
+      }
+    }
+  },
   snackbarMessage: "",
-  setBookmarks: (bookmarks, title) => {
+  setBookmarks: (bookmarks, title, folderName) => {
     set((state) => ({
       bookmarks: {
-        uncategorized: [...state.bookmarks.uncategorized, bookmarks],
+        ...state.bookmarks,
+        [folderName]: {
+          saved: [...state.bookmarks[folderName].saved, bookmarks],
+          properties: {
+            ...state.bookmarks[folderName].properties,
+          }
+        },
       },
     }));
   },
   setSnackbarMessage: (message) => {
     set({ snackbarMessage: message });
   },
-  createNewFolder: (name) => {
+  createNewFolder: (name, color) => {
     set((state) => ({
       bookmarks: {
-        [name]: [],
+        [name]: {
+          saved: [],
+          properties: {
+            visibility: true,
+            color: color || null,
+          }
+        },
         ...state.bookmarks,
       },
     }));
   },
 });
+

@@ -10,6 +10,7 @@ export const ThemeProvider = ({ children }) => {
 
     useEffect(() => {
         const localTheme = localStorage.getItem('theme')
+        console.log(localTheme)
         if (!localTheme) {
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')) {
                 setDarkMode(true)
@@ -17,7 +18,6 @@ export const ThemeProvider = ({ children }) => {
         } else {
             setDarkMode(localTheme === 'dark')
         }
-        console.log(localTheme)
     }, [])
 
     useEffect(() => {

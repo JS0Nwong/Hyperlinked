@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Inter"',],
-        body: ['"Roboto Mono"',],
+        display: ['"Inter"', 'sans-serif'],
+        body: ['"Roboto Mono"', 'Mono'],
       },
     },
   },

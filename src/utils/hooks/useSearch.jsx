@@ -22,6 +22,9 @@ export default function useSearch() {
         })
         return filteredData
     }
+    const sortAlphabetically = () => {
 
-    return { getFilteredData, getHostName }
+    }
+
+    return { getFilteredData, getHostName, sortAlphabetically }
 }
