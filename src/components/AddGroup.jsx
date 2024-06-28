@@ -1,14 +1,19 @@
 import { Fieldset, Field, Input, Label, Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
 import { useBoundStore } from '../utils/storeBinder'
+import SelectComponent from './Select'
+import { useState } from 'react'
+import { colors as colorObj } from '../utils/colors'
 
 export default function AddGroup({ isOpen, onClose }) {
     const { createNewFolder } = useBoundStore((state) => ({ createNewFolder: state.createNewFolder }))
     const handleSubmit = () => {
         const name = document.getElementById('folder-name-input').value.trim()
-        if(!name) return
-        createNewFolder(name)
+        if (!name) return
+        createNewFolder(name, color)
         onClose()
     }
+
+    const [color, setColor] = useState(Object.keys(colorObj)[0])
 
     return (
         <Transition appear show={isOpen}>
@@ -41,7 +46,16 @@ export default function AddGroup({ isOpen, onClose }) {
                                             name="link"
                                         />
                                     </Field>
-                                    
+                                    <Field className='mt-2'>
+                                        <label className='text-sm/6 font-medium text-neutral-600 dark:text-neutral-400'>Color</label>
+                                        <SelectComponent
+                                            obj={colorObj}
+                                            type={"colorSelect"}
+                                            defaultValue={color}
+                                            handler={setColor}
+                                        />
+                                    </Field>
+
                                     <div className='mt-2 w-full flex flex-row justify-end'>
                                         <button
                                             onClick={onClose}

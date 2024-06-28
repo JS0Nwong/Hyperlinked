@@ -2,9 +2,15 @@ import { Fieldset, Field, Input, Label, Dialog, DialogPanel, DialogTitle, Transi
 import SelectComponent from './Select'
 import { useBoundStore } from '../utils/storeBinder'
 import { Cross2Icon } from '@radix-ui/react-icons'
+import { useState } from 'react'
 
 export default function CreateBookmarkForm({ isOpen, onClose }) {
-    const { setBookmarks } = useBoundStore()
+    const { setBookmarks, bookmarks } = useBoundStore((state) => ({
+        bookmarks: state.bookmarks,
+        setBookmarks: state.setBookmarks,
+    }))
+    const keys = Object.keys(bookmarks)
+
     const handleSubmit = async () => {
         function formatURL(url) {
             // Check if the URL starts with 'http://' or 'https://'
@@ -24,6 +30,7 @@ export default function CreateBookmarkForm({ isOpen, onClose }) {
         }
         const url = document.getElementById('url-input').value
         const title = document.getElementById('title-input').value.trim()
+        const folderName = folder
 
         if (!url) {
             alert('Please enter a URL');
@@ -38,7 +45,7 @@ export default function CreateBookmarkForm({ isOpen, onClose }) {
             }
 
             const res = await response.json();
-            setBookmarks(res);
+            setBookmarks(res, title, folderName);
             onClose()
 
         } catch (error) {
@@ -46,6 +53,8 @@ export default function CreateBookmarkForm({ isOpen, onClose }) {
             alert('Error fetching metadata');
         }
     }
+    const [folder, setFolder] = useState(Object.keys(bookmarks)[0])
+    const handleResetFolderName = () => {setFolder('uncategorized')}
 
     return (
         <Transition appear show={isOpen}>
@@ -69,8 +78,15 @@ export default function CreateBookmarkForm({ isOpen, onClose }) {
                                     <Field>
                                         <Label className="text-sm/6 font-medium text-neutral-600 dark:text-neutral-400">Group</Label>
                                         <div className='flex flex-row items-end'>
-                                            <SelectComponent />
-                                            <button className="py-[9.5px] px-2 rounded-r text-neutral-800 dark:text-neutral-200  bg-neutral-200 dark:bg-neutral-700 hover:bg-red-600 transition-all">
+                                            <SelectComponent 
+                                                obj={bookmarks} 
+                                                type={"folderSelect"} 
+                                                defaultValue={folder}
+                                                handler={setFolder}
+                                            />
+                                            <button 
+                                                onClick={() => handleResetFolderName()}
+                                                className="py-[9.5px] px-2 rounded-r text-neutral-800 dark:text-neutral-200  bg-neutral-200 dark:bg-neutral-700 hover:bg-red-600 transition-all">
                                                 <Cross2Icon />
                                             </button>
                                         </div>

@@ -37,6 +37,7 @@ const fetchMetadata = async (url) => {
     const propertyMatch = tag.match(/property=["']([^"']+)["']/i);
     const contentMatch = tag.match(/content=["']([^"']+)["']/i);
 
+    console.log(contentMatch)
     if (contentMatch) {
       const name = nameMatch
         ? nameMatch[1]
