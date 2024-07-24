@@ -1,42 +1,29 @@
 import { Fieldset, Field, Input, Label, Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
-import SelectComponent from './Select'
-import { useBoundStore } from '../utils/storeBinder'
+import SelectComponent from '../Select'
+import { useBoundStore } from '../../utils/storeBinder'
 import { Cross2Icon } from '@radix-ui/react-icons'
 import { useState } from 'react'
+import { validateUrl } from '../../utils/validateURL'
+import useData from '../../utils/hooks/useData'
 
 export default function CreateBookmarkForm({ isOpen, onClose }) {
     const { setBookmarks, bookmarks } = useBoundStore((state) => ({
         bookmarks: state.bookmarks,
         setBookmarks: state.setBookmarks,
     }))
-    const keys = Object.keys(bookmarks)
 
-    const handleSubmit = async () => {
-        function formatURL(url) {
-            // Check if the URL starts with 'http://' or 'https://'
-            if (!/^https?:\/\//i.test(url)) {
-                // If not, prepend 'https://'
-                url = 'https://' + url;
-            }
-
-            // Check if the URL already contains 'www.'
-            const urlObj = new URL(url);
-            if (!/^www\./i.test(urlObj.hostname)) {
-                // If not, prepend 'www.' to the hostname
-                urlObj.hostname = 'www.' + urlObj.hostname;
-            }
-
-            return urlObj.toString();
-        }
-        const url = document.getElementById('url-input').value
-        const title = document.getElementById('title-input').value.trim()
+    const [folder, setFolder] = useState(Object.keys(bookmarks)[0])
+    const handleResetFolderName = () => {setFolder('uncategorized')}
+    const handleSubmit = async (folder, clipboard) => {
+        const url = clipboard ?? document.getElementById('url-input').value
+        const title = document.getElementById('title-input')?.value.trim()
         const folderName = folder
-
+        
         if (!url) {
             alert('Please enter a URL');
             return;
         }
-        const formattedUrl = formatURL(url);
+        const formattedUrl = validateUrl(url);
 
         try {
             const response = await fetch(`http://localhost:8000?url=${encodeURIComponent(formattedUrl)}`);
@@ -53,8 +40,6 @@ export default function CreateBookmarkForm({ isOpen, onClose }) {
             alert('Error fetching metadata');
         }
     }
-    const [folder, setFolder] = useState(Object.keys(bookmarks)[0])
-    const handleResetFolderName = () => {setFolder('uncategorized')}
 
     return (
         <Transition appear show={isOpen}>
@@ -123,7 +108,7 @@ export default function CreateBookmarkForm({ isOpen, onClose }) {
                                             Cancel
                                         </button>
                                         <button
-                                            onClick={handleSubmit}
+                                            onClick={() => handleSubmit(folder)}
                                             className='mt-4 bg-neutral-800 dark:bg-neutral-200 text-neutral-200 dark:text-neutral-800 rounded py-2 px-4 text-sm font-medium'>
                                             Save
                                         </button>

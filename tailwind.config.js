@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Inter"', 'sans-serif'],
+        display: ['Inter', 'sans-serif'],
         body: ['"Roboto Mono"', 'Mono'],
       },
     },

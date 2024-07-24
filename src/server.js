@@ -1,20 +1,28 @@
 import puppeteer from "puppeteer";
 
+const corsHeaders = {
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  },
+};
+
 const isValidUrl = (url) => {
   // Regular expression to check if the URL starts with https:// or www.
   const regex = /^(https:\/\/|www\.)/i;
   return regex.test(url);
 };
 
-const fetchSitePreview = async(url) => {
-  const browser = await puppeteer.launch()
-  const page = await browser.newPage()
+const fetchSitePreview = async (url, cachePath) => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
   await page.goto(url, {
-    waitUntil: 'networkidle2'
-  })
-  await page.screenshot()
-  await browser.close()
-}
+    waitUntil: "networkidle2",
+  });
+  await page.screenshot({ path: cachePath, type: "png" });
+  await browser.close();
+};
 
 const fetchMetadata = async (url) => {
   const res = await fetch(url);
@@ -37,7 +45,6 @@ const fetchMetadata = async (url) => {
     const propertyMatch = tag.match(/property=["']([^"']+)["']/i);
     const contentMatch = tag.match(/content=["']([^"']+)["']/i);
 
-    console.log(contentMatch)
     if (contentMatch) {
       const name = nameMatch
         ? nameMatch[1]
@@ -49,11 +56,10 @@ const fetchMetadata = async (url) => {
       if (name) {
         metaData[name] = content;
       }
-      metaData['title'] = titleMatch
+      metaData["title"] = titleMatch;
     }
   });
-  console.log(metaData)
-  return metaData
+  return metaData;
 };
 
 const server = Bun.serve({
@@ -75,14 +81,10 @@ const server = Bun.serve({
 
     try {
       const metadata = await fetchMetadata(targetUrl);
-      return new Response(JSON.stringify(metadata), {
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*", // Allow any origin
-          "Access-Control-Allow-Methods": "GET, POST, OPTIONS", // Allow specific methods
-          "Access-Control-Allow-Headers": "Content-Type", // Allow specific headers
-        },
-      });
+      return new Response(
+        JSON.stringify(metadata), 
+        corsHeaders
+      );
     } catch (error) {
       return new Response("Failed to fetch metadata", { status: 500 });
     }
