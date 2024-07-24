@@ -1,11 +1,11 @@
 export const colors = {
-    Red: 'bg-red-500 border-red-500',
-    Orange: 'bg-orange-500 border-orange-500',
-    Yellow: 'bg-yellow-500 border-yellow-500',
-    Green: 'bg-lime-500 border-lime-500',
-    Teal: 'bg-teal-500  border-teal-500',
-    Blue: 'bg-blue-500 border-blue-500',
-    Purple: 'bg-violet-500 border-violet-500',
-    Pink: 'bg-rose-500 border-pink-500',
-    White: 'bg-neutral-200 border-neutral-200'
+    Red: 'bg-gradient-to-tr from-red-500 to-green-500 ',
+    Orange: 'bg-gradient-to-tr from-orange-500 to-blue-500',
+    Yellow: 'bg-gradient-to-tr from-yellow-500 to-purple-500 ',
+    Green: 'bg-gradient-to-tr from-emerald-500 to-line-500 ',
+    Teal: 'bg-gradient-to-tr from-teal-500 to-sky-800 ',
+    Blue: 'bg-gradient-to-tr from-blue-500 to-violet-800',
+    Purple: 'bg-gradient-to-tr from-violet-500 to-indigo-800',
+    Pink: 'bg-gradient-to-tr from-fuchsia-300 to-rose-500  ',
+    White: 'bg-gradient-to-tr from-sky-300 to-neutral-50 '
 }

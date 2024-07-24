@@ -1,10 +1,10 @@
-import { Fieldset, Field, Input, Label, Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
-import { useBoundStore } from '../utils/storeBinder'
-import SelectComponent from './Select'
 import { useState } from 'react'
-import { colors as colorObj } from '../utils/colors'
+import { Fieldset, Field, Input, Label, Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
+import { useBoundStore } from '../../utils/storeBinder'
+import { colors as colorObj } from '../../utils/colors'
+import SelectComponent from '../Select'
 
-export default function AddGroup({ isOpen, onClose }) {
+export default function CreateFolder({ isOpen, onClose }) {
     const { createNewFolder } = useBoundStore((state) => ({ createNewFolder: state.createNewFolder }))
     const handleSubmit = () => {
         const name = document.getElementById('folder-name-input').value.trim()

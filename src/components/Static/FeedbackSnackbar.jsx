@@ -1,4 +1,4 @@
-import { useBoundStore } from '../utils/storeBinder'
+import { useBoundStore } from '../../utils/storeBinder'
 
 export default function FeedbackSnackbar() {
     const { snackbarMessage, setSnackbar } = useBoundStore()

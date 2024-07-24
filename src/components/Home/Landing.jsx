@@ -1,13 +1,13 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRightIcon } from '@radix-ui/react-icons'
-import Header from './Header'
+import Header from '../Static/Header'
 import ButtonGroup from './ButtonGroup'
 
 export default function Landing() {
     return (
         <AnimatePresence>
-            <div className='flex flex-col'>
-                <motion.div className='divide-y divide-solid divide-neutral-300 dark:divide-neutral-700 h-full'>
+            <div className='flex flex-col w-full items-center'>
+                <motion.div className='divide-y divide-solid divide-neutral-300 dark:divide-neutral-700 '>
                     <div className='max-w-screen-sm w-full h-full mt-2 mb-44 md:mb-10 md:mt-32 p-4 md:p-0 font-display '>
                         <Header />
                         <h1 className='text-md font-display font-semibold text-neutral-800 dark:text-neutral-200 mt-16'>
@@ -36,7 +36,7 @@ export default function Landing() {
                         <a
                             href="/links"
                             className='w-full text-sm font-medium text-neutral-500 dark:text-neutral-400 underline underline-offset-4 flex flex-row items-center justify-end mt-10 md:mt-4 ' >
-                            Check out some cool links
+                            Get Started
                             <ArrowRightIcon className='ml-1' />
                         </a>
                     </div>
@@ -51,9 +51,8 @@ export default function Landing() {
                         </div>
                     </div>
                 </motion.div>
-                <div className='bg-red-100 h-20'>
-                    <ButtonGroup />
-                </div>
+
+                {/* <ButtonGroup /> */}
             </div>
         </AnimatePresence>
     )

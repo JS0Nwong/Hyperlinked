@@ -26,11 +26,13 @@ export const AuthProvider = ({ children }) => {
     }, [])
 
     const registerUser = async (email, pass, username) => {
-        return createUserWithEmailAndPassword(auth, email, pass).then((user) => {
-            return updateProfile(user, {
-                displayName: username
-            }).catch((error) => console.log(error))
-        })
+        return createUserWithEmailAndPassword(auth, email, pass)
+            .then((res) => {
+                const user = res.user
+                updateProfile(user, {
+                    displayName: username
+                }).catch((error) => console.log(error))
+            })
     }
 
     const signIn = async(email, password) => {
