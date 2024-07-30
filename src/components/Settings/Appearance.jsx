@@ -7,9 +7,15 @@ import ThemeButton from "../ThemeButton"
 import Select from "./Select"
 
 import { useTheme } from "../../utils/context/ThemeProvider"
+import { useBoundStore } from "../../utils/storeBinder"
 
 export default function Appearance() {
     const { darkMode, toggleTheme } = useTheme()
+    const { setGridView, setListView, setSuperuserView } = useBoundStore((state) => ({
+        setGridView: state.setGridView,
+        setListView: state.setListView,
+        setSuperuserView: state.setSuperuserView,
+    }))   
 
     const themes = ['Light', 'Dark', 'System']
     const fonts = ['Inter', 'Roboto', 'Arial', 'Sans-serif']
@@ -19,7 +25,14 @@ export default function Appearance() {
     const [selectedDisplay, setSelectedDisplay] = useState(displays[0])
 
     const handleAppearanceSubmit = () => {
-
+        if (selectedDisplay === 'List') {
+            setListView()
+        } else if (selectedDisplay === 'Comfortable Grid') {
+            setGridView()
+        }
+        else {
+            setSuperuserView()
+        }
     }
 
     return (
@@ -60,6 +73,7 @@ export default function Appearance() {
                     </div>
                 </Field>
                 <button
+                    onClick={handleAppearanceSubmit}
                     className='p-2 bg-neutral-800 dark:bg-neutral-200 w-40 mt-8 font-medium text-sm rounded-md text-neutral-200 dark:text-neutral-800 '>
                     Update appearance
                 </button>

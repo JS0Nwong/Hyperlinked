@@ -1,0 +1,17 @@
+export default function Logo() {
+    return (
+        <svg
+            className='hidden md:block'
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            fill="none"
+            viewBox="0 0 16 16"
+        >
+            <path fill="#E5E5E5" d="M8 16A7.999 7.999 0 1 1 8 0v16Z" />
+            <path fill="#171717" d="M8 0a8 8 0 1 1 0 16V0Z" />
+            <path fill="#E5E5E5" d="M10.485 4.829a4 4 0 0 1-5.657 5.657l2.829-2.829 2.828-2.828Z" />
+            <path fill="#171717" d="M4.828 10.485a4 4 0 1 1 5.657-5.657L7.657 7.657l-2.829 2.828Z" />
+        </svg>
+    )
+}

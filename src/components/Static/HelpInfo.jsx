@@ -1,11 +1,13 @@
 import { ArrowDownIcon, ArrowUpIcon, ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons"
 import { MdKeyboardCommandKey } from "react-icons/md";
+import hljs from "highlight.js";
 import KeyboardKey from "../KeyboardKey"
 import useUserAgent from "../../utils/hooks/useUserAgent";
 
 export default function HelpInfo() {
   const device  = useUserAgent()
-  
+  const html = hljs.highlight('```html\n <h1>Hello world!\</h1>\n```', { language: 'html' }).value
+
   return (
     <div className='flex flex-col'>
       <h1 className="font-semibold text-neutral-800 dark:text-neutral-200">Input</h1>
@@ -22,7 +24,16 @@ export default function HelpInfo() {
         It does not need to start with https but does need to have a domain extension (.com, .net, ...) at the end.
         Color formats will also be parsed (HEX, RGB, …) and displayed appropriately.
         Falls back to text.
-        In the future, we might support code snippets with syntax highlighting.
+        Supports code snippets with syntax highlighting. 
+        Prefix your code snippet with <code>```</code> followed by the language of the code directly after.
+        Suffix your code snippet with <code>```</code> to end the code block.
+        For example, this will render the code with HTML syntax highlighting.
+        <pre className="w-full bg-neutral-100 dark:bg-neutral-900  mt-4 rounded-md p-2 md:p-4">
+          <code
+          dangerouslySetInnerHTML={
+            { __html: html }
+          }/> 
+        </pre>
       </p>
       <h1 className="font-semibold text-neutral-800 dark:text-neutral-200">Metadata</h1>
       <p className="mb-6 mt-2 text-neutral-500 font-medium tracking-loose">

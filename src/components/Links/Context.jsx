@@ -8,7 +8,6 @@ import { colors } from '../../utils/colors'
 import { useBoundStore } from "../../utils/storeBinder";
 import { Pencil1Icon, TrashIcon, CopyIcon, MoveIcon, SymbolIcon } from '@radix-ui/react-icons'
 
-
 export default function ContextMenu({ id, handleClick, showSubMenu, folders, buttons }) {
     const { bookmarks } = useBoundStore((state) => ({ bookmarks: state.bookmarks}))
     const icons = [ <CopyIcon />, <Pencil1Icon />, <SymbolIcon/>]
