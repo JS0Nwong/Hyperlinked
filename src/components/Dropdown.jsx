@@ -7,7 +7,7 @@ export default function Dropdown({ buttonName }) {
         <Menu>
             <MenuButton className='ml-2 pr-2 text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-300  font-medium text-sm flex items-center hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-full py-1.5 px-3 transition duration-100 ease-linear data-[active]:bg-neutral-200 dark:data-[active]:bg-neutral-800'>
                 <div className='w-4 h-4 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500' />
-                <p className='mx-2 truncate'>{buttonName ?? 'Create an account'}</p>
+                <p className='mx-2 truncate max-w-20'>{buttonName ?? 'Create an account'}</p>
                 <CaretSortIcon />
             </MenuButton>
             {auth.currentUser && <MenuItems

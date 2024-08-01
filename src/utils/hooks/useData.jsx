@@ -53,6 +53,7 @@ export default function useData() {
         const isNotLink = {
             favIcon: '',
             description: '',
+            title: content,
             link: content,
             dateAdded: new Date().toDateString().slice(4, 10),
             isCode: false,
@@ -62,7 +63,7 @@ export default function useData() {
                 const formattedUrl = await validateUrl(content);
                 const response = await fetch(`http://localhost:8000?url=${encodeURIComponent(formattedUrl)}`);
                 if (!response.ok) {
-                    throw new Error('Failed to fetch metadata');
+                   throw Error('Failed to fetch data');
                 }
                 const res = await response.json();
                 setBookmarks(res, folderName);
@@ -76,6 +77,15 @@ export default function useData() {
             }
             return true;
         } catch (error) {
+            // console.log(error);
+            const retryFetch ={
+                favIcon: '',
+                link: formattedUrl,
+                dateAdded: new Date().toDateString().slice(4, 10),
+                isCode: false,
+                retryFetch: true,  
+            }
+            setBookmarks(retryFetch, folderName);
             return false; // Return false in case of any error
         }
 

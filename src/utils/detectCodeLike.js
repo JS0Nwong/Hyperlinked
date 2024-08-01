@@ -26,7 +26,6 @@ const supportedLanguages = [
 
 const detectCodeLike = (text) => {
   if (!text.includes("```")) {
-    console.log(text)
     return [{ type: "text", content: text }];
   }
 

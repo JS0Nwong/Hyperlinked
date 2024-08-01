@@ -21,10 +21,20 @@ export default function Menubar() {
             </div>
             <div className="flex flex-row items-center">
                 <div className="flex flex-row items-center mr-4 ">
-                    <a href='/help' className='mr-4 text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 hover:dark:text-neutral-200 transition-colors focus:outline-none'>
+                    <a
+                        aria-label='go help page'
+                        title='Help'
+                        href='/help'
+                        className='mr-4 text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 hover:dark:text-neutral-200 transition-colors focus:outline-none'
+                    >
                         <QuestionMarkCircledIcon />
                     </a>
-                    <button className='text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 hover:dark:text-neutral-200 transition-colors focus:outline-none' onClick={() => toggleTheme()}>
+                    <button
+                        aria-label='toggle theme'
+                        title='Toggle theme'
+                        className='text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 hover:dark:text-neutral-200 transition-colors focus:outline-none'
+                        onClick={() => toggleTheme()}
+                    >
                         <i> {darkMode ? <SunIcon /> : <MoonIcon />} </i>
                     </button>
                 </div>

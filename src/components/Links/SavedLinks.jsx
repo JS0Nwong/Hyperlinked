@@ -144,6 +144,7 @@ function LinkContainer({ children, isLink, data, onContext, handleClick, setFocu
                 href={isLink ? data.link : undefined}
                 target={isLink ? '_blank' : undefined}
                 aria-label='links'
+                title={isLink ? '' : data.link}
                 className='cursor-pointer select-none w-full first:mt-1 py-3 md:px-0.5 md:py-2.5 rounded-md flex flex-row items-center text-ellipsis relative focus:outline-none'
             >
                 {children}
