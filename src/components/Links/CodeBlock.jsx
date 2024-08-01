@@ -18,15 +18,17 @@ export default function CodeBlock({ isOpen, onClose, code, language }) {
         <Transition appear show={isOpen}>
             <Dialog as="div" className="relative focus:outline-none z-50" onClose={onClose}>
                 <AnimatePresence>
-                    <motion.div className="fixed inset-0 bg-black/50" aria-hidden="true" />
+                    <motion.div 
+                        key="overlay"
+                        className="fixed inset-0 bg-black/50" aria-hidden="true" 
+                    />
                     <motion.div
                         key="code-block"
                         initial={{ scale: 0.95 }}
-                        animate={{ scale: 1 }}
+                        animate={{ scale: 1, transition: { duration: 0.1 } }}
                         exit={{ scale: 0.95 }}
-                        transition={{ duration: 0.1 }}
                         className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                        <div className="flex min-h-full  items-center justify-center p-4">
+                        <div className="flex min-h-full  justify-center p-4">
                             <DialogPanel className="relative w-full min-h-full max-w-3xl rounded-xl bg-neutral-100 dark:bg-neutral-900 p-4 py-8 backdrop-blur-2xl border dark:border-neutral-800 border-neutral-300">
                                 <div className='absolute flex top-4 right-4 gap-2'>
                                     <Button 

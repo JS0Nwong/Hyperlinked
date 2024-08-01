@@ -13,10 +13,9 @@ export default function Menubar() {
     return (
         <div className='w-full px-2 py-4 md:px-12 flex justify-between sticky top-0 z-40 backdrop-blur-sm bg-white/90 dark:bg-[#121212]/40 border-b border-neutral-200 dark:border-neutral-800'>
             <div className="flex items-center w-full ">
-                {/* <h1 className='hidden md:block text-3xl font-display tracking-tight font-semibold text-neutral-900 dark:text-neutral-200'>
-                    Hyperlinked
-                </h1> */}
-                <Logo />
+                <div className='hidden md:block '>
+                    <Logo />
+                </div>
                 <p className='hidden md:block mx-4 text-3xl font-thin text-neutral-300 dark:text-neutral-700'>/</p>
                 <FolderNavigation />
             </div>

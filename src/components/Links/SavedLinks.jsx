@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FileTextIcon, CheckIcon, KeyboardIcon } from '@radix-ui/react-icons'
-import LinkPreview from './LinkPreview'
 import hljs from 'highlight.js'
 import "highlight.js/styles/base16/dracula.css"
 
@@ -22,13 +21,13 @@ function CodeSnippet({ snippet, langauge, edit, handleChanges, index, copy, copi
         <div className='flex relative w-full max-w-full'>
             <motion.code
                 key='code-snippet'
-                className='w-full max-w-60 h-full max-h-5 text-neutral-800 dark:text-neutral-200 text-sm font-medium ml-1 mr-1 truncate'
+                className=' max-w-44 md:max-w-96 h-full max-h-5 text-neutral-800 dark:text-neutral-200 text-sm font-medium ml-1 mr-1 truncate'
                 initial={{ opacity: 1 }}
                 animate={{ opacity: copy || copied ? 0 : 1 }}
                 exit={{ opacity: 0 }}
                 dangerouslySetInnerHTML={{ __html: highlightCode }}
             />
-            <p className='text-neutral-500 mx-2 md:mr-4 text-xs max-w-[150px] truncate text-end font-medium'>{description}</p>
+            <p className=' text-neutral-400 dark:text-neutral-500 mx-2 md:mr-4 text-xs max-w-[150px] truncate text-start'>{description}</p>
         </div>
     )
 }
@@ -70,25 +69,30 @@ function LinkTitle({ edit, title, handleChanges, index, copy, copied, displayLin
             placeholder=''
             autoComplete='off'
             type='text'
-            className='w-full text-neutral-800 dark:text-neutral-200 text-sm font-medium ml-1 mr-1 text-nowrap text-ellipsis overflow-hidden bg-transparent z-50 focus:outline-none'
+            className='w-full text-neutral-800 dark:text-neutral-200 text-sm font-medium ml-1 mr-1 truncate bg-transparent z-50 focus:outline-none'
             onBlur={(e) => handleChanges(e.target.value, index)}
             onFocus={(e) => e.target.select()}
         />
     ) : (
-        <motion.p
-            key='site-title'
-            initial={{ opacity: 1 }}
-            animate={{ opacity: copy || copied ? 0 : 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className='w-full flex items-center text-neutral-800 dark:text-neutral-200 text-sm font-medium ml-1 mr-1 text-nowrap text-ellipsis overflow-hidden'
-            id='site-title'
-        >
-            {title}
-            <span className='text-neutral-500 mx-2 md:mr-4 text-xs max-w-[150px] truncate text-end'>
+        <div className='flex relative w-full max-w-full items-center '>
+            <motion.p
+                key='site-title'
+                initial={{ opacity: 1 }}
+                animate={{ opacity: copy || copied ? 0 : 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className='max-w-44 md:max-w-96 text-neutral-800 dark:text-neutral-200 text-sm font-medium mx-2 truncate'
+                id='site-title'
+            >
+                {title}
+            </motion.p>
+            <span 
+                className=' text-nowrap text-xs  tracking-tight text-neutral-500 mx-2 md:mr-4'
+                // className=' text-neutral-500 mx-2 md:mr-4 text-xs max-w-[150px] truncate text-end font-medium'
+            >
                 {displayLink}
             </span>
-        </motion.p>
+        </div>
     );
 }
 
@@ -101,7 +105,7 @@ function LinkIcon({ isHex, isRGB, isCode, displayLink, copy, copied }) {
                 animate={{ opacity: copy || copied ? 0 : 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                className='w-4 h-4 mx-2 md:ml-4 rounded-full'
+                className='w-4 h-4 mx-2 md:ml-4 px-2 rounded-full'
                 style={{ backgroundColor: displayLink }}
             />
         );
@@ -140,7 +144,7 @@ function LinkContainer({ children, isLink, data, onContext, handleClick, setFocu
                 href={isLink ? data.link : undefined}
                 target={isLink ? '_blank' : undefined}
                 aria-label='links'
-                className='cursor-pointer select-none w-full first:mt-1 py-3 md:px-0.5 md:py-2.5 rounded-md flex flex-row justify-between items-center text-ellipsis relative focus:outline-none'
+                className='cursor-pointer select-none w-full first:mt-1 py-3 md:px-0.5 md:py-2.5 rounded-md flex flex-row items-center text-ellipsis relative focus:outline-none'
             >
                 {children}
                 {!edit && focused === index && (
@@ -242,7 +246,7 @@ export default function SavedLinks({
                 copied={copied}
                 description={description}
             />}
-            <h1 className='text-nowrap text-xs font-semibold tracking-tight text-neutral-500 mx-2 md:mr-4'>{data.dateAdded}</h1>
+            <h1 className=' text-nowrap text-xs font-semibold tracking-tight text-neutral-400 dark:text-neutral-500 mx-2 md:mr-4'>{data.dateAdded}</h1>
         </LinkContainer>
     );
 }

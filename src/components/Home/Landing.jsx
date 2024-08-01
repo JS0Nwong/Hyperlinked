@@ -8,7 +8,7 @@ export default function Landing() {
         <AnimatePresence>
             <div className='flex flex-col w-full items-center'>
                 <motion.div>
-                    <div className='max-w-screen-sm w-full h-full mt-2 mb-10 md:mb-10 md:mt-32 p-4 md:p-0 font-display '>
+                    <div className='max-w-screen-sm w-full h-full mt-2 mb-4 md:mb-10 md:mt-32 p-4 md:p-0 font-display '>
                         <motion.div
                             className='flex flex-col'
                             initial={{ opacity: 0 }}
@@ -76,15 +76,15 @@ export default function Landing() {
                             Get Started
                             <ArrowRightIcon className='ml-1' />
                         </motion.a>
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.6, duration: 0.5, ease: 'easeIn' }}
+                            className='my-8 h-px rounded-full w-full bg-gradient-to-r from-[#ffa8bd] via-purple-500 to-[#242acf]'
+                        />
                     </div>
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.6, duration: 0.5, ease: 'easeIn' }}
-                        className='h-px rounded-full w-11/12 md:w-full bg-gradient-to-r from-[#ffa8bd] via-purple-500 to-[#242acf]'
-                    />
-                    <motion.div
-                        className='px-2 pt-8 mx-4 md:mx-0 md:px-0 my-2'
+                        className='px-2 mx-4 md:mx-0 md:px-0 my-2'
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.7, duration: 0.5, ease: 'easeIn' }}
