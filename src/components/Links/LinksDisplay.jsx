@@ -116,7 +116,7 @@ export default function LinksDisplay() {
         // className='relative gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6' 
         >
           <AnimatePresence>
-            {bookmarks[currentFolderDirectory].saved.map((bookmark, index) => (
+            {bookmarks[currentFolderDirectory]?.saved.map((bookmark, index) => (
               <SavedLinks
                 key={index}
                 data={bookmark}
