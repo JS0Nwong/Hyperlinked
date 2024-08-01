@@ -34,31 +34,28 @@ const fetchMetadata = async (url) => {
   const metaData = {
     favIcon: favIcon.url,
     link: url,
+    dateAdded: new Date().toDateString().slice(4, 10),
+    isCode: false,  
   };
   const metaTagRegex = /<meta[^>]+>/gi;
   const matches = html.match(metaTagRegex) || [];
-  const match = html.match(/<title>([^<]*)<\/title>/i);
-  const titleMatch = match ? match[1] : "No title found";
-
+  const titleMatch = html.match(/<title>([^<]*)<\/title>/i);
+  metaData["title"] = titleMatch ? titleMatch[1] : "No title found";
+  
   matches.forEach((tag) => {
-    const nameMatch = tag.match(/name=["']([^"']+)["']/i);
-    const propertyMatch = tag.match(/property=["']([^"']+)["']/i);
-    const contentMatch = tag.match(/content=["']([^"']+)["']/i);
-
-    if (contentMatch) {
-      const name = nameMatch
-        ? nameMatch[1]
-        : propertyMatch
-        ? propertyMatch[1]
-        : null;
-      const content = contentMatch[1];
-
-      if (name) {
-        metaData[name] = content;
+      const nameMatch = tag.match(/name=["']([^"']+)["']/i);
+      const contentMatch = tag.match(/content=["']([^"']+)["']/i);
+  
+      if (contentMatch && nameMatch) {
+          const name = nameMatch[1];
+          const content = contentMatch[1];
+  
+          if (name.toLowerCase() === 'description') {
+              metaData["description"] = content;
+          }
       }
-      metaData["title"] = titleMatch;
-    }
   });
+  
   return metaData;
 };
 

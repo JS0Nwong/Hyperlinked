@@ -7,15 +7,13 @@
     @apply bg-white dark:bg-[#121212];
   }
   body::-webkit-scrollbar {
-    width: 14px;
-    @apply bg-white dark:bg-[#121212];
+    @apply bg-neutral-200 dark:bg-neutral-700 w-4;
   }
   
   body::-webkit-scrollbar-thumb {
-    border: 4px solid rgba(0,0,0,0);
-    border-radius: 99px;
-    background-color: rgb(82 82 82);
-    background-clip: padding-box;
+    border: 2px solid rgba(0,0,0,0);
+    @apply rounded-md bg-clip-padding dark:bg-neutral-500 bg-neutral-400 border-[3px];
+
   }
   ::selection {
     @apply bg-neutral-800 dark:bg-neutral-200; 

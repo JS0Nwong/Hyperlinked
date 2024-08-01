@@ -4,15 +4,44 @@ import { useBoundStore } from '../../utils/storeBinder'
 import toast from 'react-hot-toast';
 
 export default function useData() {
-    const { setBookmarks, bookmarks } = useBoundStore((state) => ({
-        bookmarks: state.bookmarks,
+    const { setBookmarks, currentFolderDirectory } = useBoundStore((state) => ({
         setBookmarks: state.setBookmarks,
+        currentFolderDirectory: state.currentFolderDirectory,
     }))
 
-    const handleSubmit = async (folder, clipboard) => {
-        const content = clipboard ?? document.getElementById('url-input').value
+    const extractCode = (clipboard) => {
+        // Regex to match code block with optional language identifier
+        const codeBlockRegex = /```(?:\w+)?\n([\s\S]*?)```/;
+    
+        // Execute the regex to extract code
+        const match = codeBlockRegex.exec(clipboard);
+    
+        // If a match is found, return the extracted code trimmed of any leading/trailing whitespace
+        if (match) {
+            return match[1].trim();
+        }
+    
+        // If no match is found, return the original clipboard text trimmed
+        return clipboard.trim();
+    };
+
+    const handleCodeSnippet = (clipboard, language) => {
+        const parsedCode = extractCode(clipboard);
+        const isCode = {
+            favIcon: '',
+            description: language,
+            link: parsedCode,
+            dateAdded: new Date().toDateString().slice(4, 10),
+            isCode: true,
+        }
+        const folderName = currentFolderDirectory
+        setBookmarks(isCode, folderName);
+    }
+
+    const handleSubmit = async (clipboard) => {
+        const content = clipboard.trim()
         const title = document.getElementById('title-input')?.value.trim()
-        const folderName = folder
+        const folderName = currentFolderDirectory
 
         if (!content) {
             toast.error('Enter a url', {
@@ -25,33 +54,31 @@ export default function useData() {
             favIcon: '',
             description: '',
             link: content,
+            dateAdded: new Date().toDateString().slice(4, 10),
+            isCode: false,
         }
-
-        if (contentType === 'link') {
-            try {
+        try {
+            if (contentType === 'link') {
                 const formattedUrl = await validateUrl(content);
                 const response = await fetch(`http://localhost:8000?url=${encodeURIComponent(formattedUrl)}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch metadata');
                 }
                 const res = await response.json();
-                setBookmarks(res, title, folderName);
-            } catch (error) {
-                toast.error('Error saving link', {
-                    icon: <div className="w-1 h-1 bg-red-500 rounded-full" />,
-                });
+                setBookmarks(res, folderName);
+            } else if (['rgb', 'hex', 'plain-text'].includes(contentType)) {
+                setBookmarks(isNotLink, folderName);
+            } else {
+                toast.error("Couldn't detect content type ☹", {
+                    icon: <div className="w-1 h-1 rounded-full bg-yellow-500" />,
+                })
+                return false;
             }
-        } else if (contentType === 'rgb') {
-            setBookmarks(isNotLink, title, folderName);
-        } else if (contentType === 'hex') {
-            setBookmarks(isNotLink, title, folderName);
-        } else if (contentType === 'plain-text') {
-            setBookmarks(isNotLink, title, folderName);
-        } else {
-            toast.error("Couldn't detect content type ☹", {
-                icon: <div className="w-1 h-1 rounded-full bg-yellow-500" />,
-            })
+            return true;
+        } catch (error) {
+            return false; // Return false in case of any error
         }
+
     }
-    return { handleSubmit }
+    return { handleSubmit, handleCodeSnippet }
 }

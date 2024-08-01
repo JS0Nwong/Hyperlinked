@@ -55,7 +55,6 @@ export const AuthProvider = ({ children }) => {
         logout
     }
 
-
     return (
         <AuthContext.Provider value={ values }>
             {!loading && children}

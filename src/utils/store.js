@@ -10,7 +10,7 @@ export const useDatastore = (set, get) => ({
     },
   },
   parsedBookmarks: [],
-  setBookmarks: (bookmarks, title, folderName) => {
+  setBookmarks: (bookmarks, folderName) => {
     set((state) => ({
       bookmarks: {
         ...state.bookmarks,
@@ -81,8 +81,6 @@ export const useDatastore = (set, get) => ({
     set((state) => {
       const bookmark = state.bookmarks[folderName].saved[index];
       bookmark.title = newTitle;
-      bookmark.link = newTitle;
-      console.log(bookmark);  
       return {
         bookmarks: {
           ...state.bookmarks,

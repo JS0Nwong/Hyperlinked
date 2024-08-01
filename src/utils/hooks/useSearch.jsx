@@ -1,14 +1,7 @@
 import { useBoundStore } from "../storeBinder"
-import { useState } from "react"
 
 export default function useSearch() {
-    const { 
-        bookmarks, 
-    } = useBoundStore((state) => ({ 
-        bookmarks: state.bookmarks, 
-    }))
-    const [searchResults, setSearchResults] = useState([])
-
+    const { bookmarks } = useBoundStore((state) => ({ bookmarks: state.bookmarks }))
     const keys = Object.keys(bookmarks)
 
     const getFilteredData = (searchQuery) => {
@@ -30,15 +23,13 @@ export default function useSearch() {
 
     const globalSearch = (searchQuery) => {
         const domElements = Array.from(document.getElementById('user-saved-links-wrapper').children)
-        const res = domElements.filter((element) => {
-            return element.textContent.toLowerCase().includes(searchQuery.toLowerCase())
-        })
-        setSearchResults(res)
+        for (const element of domElements) {
+            if (!element.textContent.toLowerCase().includes(searchQuery.toLowerCase())) element.classList.add('hidden')
+            else element.classList.remove('hidden')
+        }
     }
 
     return { 
-        searchResults,
-        setSearchResults, 
         getFilteredData, 
         getHostName, 
         sortAlphabetically, 

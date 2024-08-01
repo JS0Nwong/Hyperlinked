@@ -14,7 +14,7 @@ import Help from './views/Help'
 import './App.css'
 
 import { ThemeProvider } from './utils/context/ThemeProvider'
-import { AuthProvider } from './utils/context/AuthContext'
+import { AuthProvider, useAuth } from './utils/context/AuthContext'
 
 const queryClient = new QueryClient()
 

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { colors } from '../../utils/colors'
 import { useBoundStore } from "../../utils/storeBinder";
+
 export default function ContextMenu({
     rightClickItem,
     x,
@@ -66,7 +67,7 @@ export default function ContextMenu({
                             }
                         </button>
 
-                        {hoveredButton === index && (
+                        {(hoveredButton === index && folders.length > 1 ) && (
                             <div
                                 onMouseEnter={() => setHoveredButton(index)}
                                 onMouseLeave={(e) => {

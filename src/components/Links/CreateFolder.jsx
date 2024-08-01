@@ -17,19 +17,19 @@ export default function CreateFolder({ isOpen, onClose }) {
 
     return (
         <Transition appear show={isOpen}>
-            <Dialog as="div" className="relative focus:outline-none" onClose={onClose}>
+            <Dialog as="div" className="relative focus:outline-none z-50" onClose={onClose}>
                 <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                     <div className="flex min-h-full items-center justify-center p-4">
                         <TransitionChild
                             enter="ease-out duration-300"
-                            enterFrom="opacity-0 transform-[scale(95%)]"
+                            enterFrom="opacity-0 transform-[scale(75%)]"
                             enterTo="opacity-100 transform-[scale(100%)]"
                             leave="ease-in duration-200"
                             leaveFrom="opacity-100 transform-[scale(100%)]"
                             leaveTo="opacity-0 transform-[scale(95%)]"
                         >
-                            <DialogPanel className="w-full max-w-lg rounded-xl bg-neutral-100 dark:bg-white/5 p-6 backdrop-blur-2xl">
+                            <DialogPanel className="w-full max-w-md rounded-xl bg-neutral-100 dark:bg-white/5 p-6 backdrop-blur-2xl border dark:border-neutral-800 border-neutral-300">
                                 <DialogTitle as="h3" className="text-base/7 font-medium text-neutral-800 dark:text-white">
                                     Create a new folder
                                 </DialogTitle>
@@ -37,6 +37,7 @@ export default function CreateFolder({ isOpen, onClose }) {
                                     <Field className='mt-2'>
                                         <Label className="text-sm/6 font-medium text-neutral-600 dark:text-neutral-400">Name</Label>
                                         <Input
+                                            autoFocus={true}
                                             required={true}
                                             autoComplete='off'
                                             type='text'
@@ -65,7 +66,7 @@ export default function CreateFolder({ isOpen, onClose }) {
                                         </button>
                                         <button
                                             onClick={handleSubmit}
-                                            className='mt-4 bg-neutral-800 dark:bg-neutral-200 text-neutral-200 dark:text-neutral-800 rounded py-2 px-4 text-sm font-medium'>
+                                            className='mt-4 bg-neutral-800 dark:bg-neutral-200 text-neutral-200 dark:text-neutral-800 rounded py-2 px-4 text-sm font-medium hover:opacity-90 transition duration-100 ease-out border border-neutral-500'>
                                             Add
                                         </button>
                                     </div>

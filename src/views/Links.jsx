@@ -3,31 +3,35 @@ import { useHotkeys } from "react-hotkeys-hook"
 import toast from 'react-hot-toast';
 
 import LinksDisplay from "../components/Links/LinksDisplay"
-import Searchbar from "../components/Links/Searchbar"
+import LinksDisplayCard from "../components/Links/LinksDisplayCard";
 import Menubar from "../components/Static/Menubar"
 
 import useData from "../utils/hooks/useData"
 import { useBoundStore } from "../utils/storeBinder"
+import { detectCodeLike } from "../utils/detectCodeLike";
 
 export default function Links() {
     const navigate = useNavigate()
-    const { handleSubmit } = useData()
+    const { handleSubmit, handleCodeSnippet } = useData()
 
     const {
         bookmarks,
         setCurrentFolderDirectory,
-        currentFolderDirectory
+        currentFolderDirectory,
+        isSuperuserView,
+        isListView,
+        isGridView,
     } = useBoundStore((state) => ({
         bookmarks: state.bookmarks,
         currentFolderDirectory: state.currentFolderDirectory,
         setCurrentFolderDirectory: state.setCurrentFolderDirectory,
+        isSuperuserView: state.isSuperuserView,
+        isListView: state.isListView,
+        isGridView: state.isGridView,
     }))
     const keys = Object.keys(bookmarks)
     const index = keys.indexOf(currentFolderDirectory)
 
-    const activeElement = document.activeElement === document.getElementById('searchbar') ||
-        document.activeElement === document.getElementById('url-input') ||
-        document.activeElement === document.getElementById('title-input');
     useHotkeys('left', () => {
         if (index === 0) {
             setCurrentFolderDirectory(keys[keys.length - 1])
@@ -56,34 +60,52 @@ export default function Links() {
     useHotkeys('ctrl+v', async (e) => {
         e.preventDefault()
         const clipboard = await navigator.clipboard.readText()
-        const length = clipboard.split('\n').length
+        const isCode = detectCodeLike(clipboard)
+        if (isCode[0].type === 'code') {
+            handleCodeSnippet(clipboard, isCode[0].language)
+            toast.success(`Inserted code snippet`, {
+                icon: <div className="w-1 h-1 bg-green-500 rounded-full" />
+            })
+            return
+        } 
         if (clipboard !== '') {
             const arr = clipboard.split('\n')
-            const promises = arr.map(async (url) => {
-                await handleSubmit(currentFolderDirectory, url)
-            })
-            const res = Promise.all(promises)
-
-            // if(res) {
-            //     toast.success(`Inserted ${length} item(s)`, {
-            //         icon: <div className="w-1 h-1 bg-green-500 rounded-full" />
-            //     })
-            // } else {
-            //     toast.error('Error inserting items', {
-            //         icon: <div className="w-1 h-1 bg-red-500 rounded-full" />
-            //     })
-            // }
+            const promises = await Promise.all(arr.map(async (item) => {
+                return await handleSubmit(item)
+            }))
+            const allSucceess = promises.every((promise) => promise === true)
+            if (allSucceess) {
+                const length = clipboard.split('\n').length
+                toast.success(`Inserted ${length} item(s)`, {
+                    icon: <div className="w-1 h-1 bg-green-500 rounded-full" />
+                })
+            } else {
+                toast.error('Error inserting items', {
+                    icon: <div className="w-1 h-1 bg-red-500 rounded-full" />
+                })
+            }
+        }
+    })
+    useHotkeys('1,2,3,4,5,6,7,8,9', (e, handler) => {
+        const index = parseInt(handler.keys) - 1
+        if (index < keys.length) {
+            setCurrentFolderDirectory(keys[index])
+            navigate(`/links/${keys[index]}`)
         }
     })
 
     return (
         <div className='h-full min-h-max w-full flex flex-col items-center justify-center '>
             <Menubar />
-            <div className='max-w-[704px] w-full h-full my-2 md:my-24 p-4 md:p-0 font-display overflow-visible'>
-                <Searchbar />
-                <LinksDisplay />
+            <div
+                className={`${isGridView ? 'md:px-12 md:my-12' : 'max-w-[704px] md:p-0 md:my-24'} 
+                w-full h-full my-2 p-4 font-display overflow-visible`}
+            >
+                {isListView && <LinksDisplay />}
+                {isGridView && <LinksDisplayCard />}
+                {/* {isSuperuserView && <SuperuserView />} */}
             </div>
-            <div className='bg-gradient-to-t dark:from-[#121212] from-white w-full h-32 hidden md:block md:fixed bottom-0 select-none pointer-events-none'/>
+            <div className='bg-gradient-to-t dark:from-[#121212] from-white w-full h-32 hidden md:block md:fixed bottom-0 select-none pointer-events-none' />
         </div>
     )
 }
