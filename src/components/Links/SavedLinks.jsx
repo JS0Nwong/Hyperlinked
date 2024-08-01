@@ -222,7 +222,7 @@ export default function SavedLinks({
                     isHex={isHex}
                     isRGB={isRGB}
                     isCode={isCode}
-                    displayLink={displayLink}
+                    displayLink={title}
                     copy={copy}
                     copied={copied}
                 />

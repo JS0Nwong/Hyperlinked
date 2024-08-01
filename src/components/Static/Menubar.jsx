@@ -30,7 +30,7 @@ export default function Menubar() {
                 </div>
                 <div className='h-6 bg-neutral-300 dark:bg-neutral-700 w-px' />
                 <div className='z-50'>
-                    <Dropdown buttonName={currentUser.displayName} />
+                    <Dropdown buttonName={currentUser?.displayName} />
                 </div>
             </div>
         </div>
