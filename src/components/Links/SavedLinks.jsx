@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FileTextIcon, CheckIcon, KeyboardIcon } from '@radix-ui/react-icons'
+import { FileTextIcon, CheckIcon, KeyboardIcon, GlobeIcon } from '@radix-ui/react-icons'
 import hljs from 'highlight.js'
+import LinkPreview from './LinkPreview'
 import "highlight.js/styles/base16/dracula.css"
 
 function CodeSnippet({ snippet, langauge, edit, handleChanges, index, copy, copied, description }) {
@@ -83,12 +84,12 @@ function LinkTitle({ edit, title, handleChanges, index, copy, copied, displayLin
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className='max-w-44 md:max-w-96 text-neutral-800 dark:text-neutral-200 text-sm font-medium mx-2 truncate'
                 id='site-title'
+                dangerouslySetInnerHTML={{ __html: title }}
             >
-                {title}
             </motion.p>
-            <span 
+            <span
                 className=' text-nowrap text-xs  tracking-tight text-neutral-500 mx-2 md:mr-4'
-                // className=' text-neutral-500 mx-2 md:mr-4 text-xs max-w-[150px] truncate text-end font-medium'
+            // className=' text-neutral-500 mx-2 md:mr-4 text-xs max-w-[150px] truncate text-end font-medium'
             >
                 {displayLink}
             </span>
@@ -173,6 +174,7 @@ export default function SavedLinks({
     copy,
     focused,
     setFocused,
+    isHovered,  
     setHovered,
     onContext,
     handleOpenModal
@@ -182,9 +184,9 @@ export default function SavedLinks({
     const description = data?.description;
     const title = data?.title;
     const isCode = hljs.getLanguage(description)?.name.toLowerCase()
-    const isLink = description && favIcon;
-    const isRGB = data?.link.trim().match(/rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)/);
-    const isHex = data?.link.trim().match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/);
+    const isLink = /^(https:\/\/|www\.)/i.test(data?.link);
+    const isRGB = data?.link.trim().match(/rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)/) && data?.title.trim().match(/rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)/);
+    const isHex = data?.link.trim().match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/) && data?.title.trim().match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/)
     const [copied, setCopied] = useState(false);
     const handleClick = () => {
         navigator.clipboard.writeText(data.link);
@@ -193,7 +195,6 @@ export default function SavedLinks({
             setCopied(false);
         }, 1000);
     };
-
     return (
         <LinkContainer
             isLink={isLink}
@@ -209,15 +210,19 @@ export default function SavedLinks({
 
             <CopiedIndicator copy={copy} copied={copied} />
             {isLink ? (
-                <motion.img
+                <motion.div
                     key="favicon"
                     initial={{ opacity: 1 }}
                     animate={{ opacity: copy || copied ? 0 : 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                     className="w-4 h-4 mx-2 md:ml-4"
-                    src={favIcon}
-                />
+                >
+                    {favIcon
+                        ? <img src={favIcon} />
+                        : <GlobeIcon className=" dark:text-neutral-200 text-neutral-900"
+                        />}
+                </motion.div>
             ) : (
                 <LinkIcon
                     isHex={isHex}

@@ -23,7 +23,7 @@ export default function ContextMenu({
             }}
             ref={contextMenuRef}
             className={isToggled
-                ? 'absolute z-50 backdrop-blur-sm bg-neutral-100/90 dark:bg-neutral-900/90 border border-neutral-300 dark:border-neutral-800 rounded-lg shadow-md px-1.5 py-1.5 flex flex-col items-start w-44'
+                ? 'absolute z-50 backdrop-blur-sm bg-neutral-100/90 dark:bg-neutral-900/90 border border-neutral-300 dark:border-neutral-800 rounded-md shadow-md px-1.5 py-1.5 flex flex-col items-start w-44'
                 : 'hidden invisible'
             }>
 
@@ -49,7 +49,7 @@ export default function ContextMenu({
                         <button
                             onClick={ handleClick }
                             key={index}
-                            className='flex items-center justify-between text-sm font-medium text-neutral-500 dark:text-neutral-400  hover:bg-neutral-300 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-neutral-100 px-2 py-1.5 rounded w-full text-left'
+                            className='group flex items-center justify-between text-xs font-medium text-neutral-500  hover:bg-neutral-300 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-neutral-100 p-1 rounded w-full text-left'
                         >
                             <div className='flex items-center'>
                                 <span>{button.icon}</span>
@@ -57,16 +57,15 @@ export default function ContextMenu({
                             </div>
                             {button.keyboardShortcut &&
                                 <div className='flex items-center'>
-                                    <kbd className='mr-0.5 text-xs select-none rounded bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-400 py-0.5 px-1.5'>
+                                    <kbd className='mr-0.5 text-xs select-none rounded-sm bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-500 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 py-0.5 px-1.5'>
                                         {button.keyboardShortcut.slice(0, 4)}
                                     </kbd>
-                                    <kbd className='text-xs select-none rounded bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-400 py-0.5 px-1.5'>
+                                    <kbd className='text-xs select-none rounded-sm bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-500 group-hover:text-neutral-900 dark:group-hover:text-neutral-100  py-0.5 px-1.5'>
                                         {button.keyboardShortcut.slice(5)}
                                     </kbd>
                                 </div>
                             }
                         </button>
-
                         {(hoveredButton === index && folders.length > 1 ) && (
                             <div
                                 onMouseEnter={() => setHoveredButton(index)}

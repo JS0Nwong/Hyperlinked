@@ -62,6 +62,7 @@ export default function Links() {
         const clipboard = await navigator.clipboard.readText()
         const isCode = detectCodeLike(clipboard)
         if (isCode[0].type === 'code') {
+            console.log(isCode[0].language)
             handleCodeSnippet(clipboard, isCode[0].language)
             toast.success(`Inserted code snippet`, {
                 icon: <div className="w-1 h-1 bg-green-500 rounded-full" />

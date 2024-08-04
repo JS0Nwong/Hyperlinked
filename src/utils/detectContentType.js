@@ -1,18 +1,14 @@
-import hljs from "highlight.js";
-
 const detectContentType = (string) => {
-    const isRGB = /rgb\(/.test(string);
-    const isHex = /#/.test(string);
-    const isLink = /^(https:\/\/|www\.)/i.test(string);
-    const detectCodeType = hljs.highlightAuto(string);
+    const isLink = /^(https:\/\/|http:\/\/|www\.)/i.test(string);
+    const isRGB = /^rgb\((\d{1,3}), (\d{1,3}), (\d{1,3})\)$/i.test(string.trim());
+    const isHex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/i.test(string.trim());
 
-    if (isRGB) {
+    if (isLink) {
+        return "link";
+    } else if (isRGB) {
         return "rgb";
     } else if (isHex) {
         return "hex";
-    } 
-    else if (isLink) {
-        return "link";
     } else {
         return "plain-text";
     }

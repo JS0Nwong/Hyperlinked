@@ -1,8 +1,9 @@
+import { useAuth } from "../context/AuthContext";
 import { db, auth } from "../firebase";
 import { doc, setDoc, collection, addDoc, getDocs, updateDoc, arrayUnion, } from "firebase/firestore";
 
 export default function useFirebase() {
-  const user = auth?.currentUser;
+  const { user } = useAuth();
 
   // Read operations
   const fetchFolders = async () => {

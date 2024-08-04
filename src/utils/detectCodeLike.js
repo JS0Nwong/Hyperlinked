@@ -24,12 +24,12 @@ const supportedLanguages = [
   "yaml",
 ];
 
+
 const detectCodeLike = (text) => {
-  if (!text.includes("```")) {
+  const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/g;
+  if(!codeBlockRegex.test(text)) {
     return [{ type: "text", content: text }];
   }
-
-  const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/g;
   let result = [];
   let lastIndex = 0;
 
@@ -52,5 +52,6 @@ const detectCodeLike = (text) => {
 
   return result;
 };
+
 
 export { detectCodeLike, supportedLanguages };

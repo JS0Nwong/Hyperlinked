@@ -126,6 +126,7 @@ export default function LinksDisplay() {
                 copy={copiedIndex === index}
                 focused={focused}
                 setFocused={setFocused}
+                isHovered={hovered}
                 setHovered={setHovered}
                 onContext={(e) => handleOnContextMenu(e, index)}
                 handleOpenModal={handleOpenCodeBlockModal}

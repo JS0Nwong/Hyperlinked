@@ -14,12 +14,12 @@ export default function ContextMenu({ id, handleClick, showSubMenu, folders, but
     return (
         <Menu
             id={id}
-            className='backdrop-blur-sm bg-neutral-100/90 dark:bg-neutral-900/90 border border-neutral-300 dark:border-neutral-800 rounded-lg shadow-md px-1.5 py-1.5 flex flex-col items-start w-44'
+            className='backdrop-blur-sm bg-neutral-100/90 dark:bg-neutral-900/90 border border-neutral-300 dark:border-neutral-800 rounded-md shadow-md px-1.5 py-1.5 flex flex-col items-start w-44'
         >
             {buttons.map((button, index) => (
                 <Item
                     key={button}
-                    className='flex items-center justify-between text-sm font-medium text-neutral-500 dark:text-neutral-400  hover:bg-neutral-300 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-neutral-100 px-2 py-1.5 rounded w-full text-left'
+                    className='flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400  hover:bg-neutral-300 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-neutral-100 px-2 py-1.5 rounded w-full text-left'
                     id={button}
                     onClick={handleClick}
                 >
@@ -32,7 +32,7 @@ export default function ContextMenu({ id, handleClick, showSubMenu, folders, but
            
             <Separator />
             <Item
-                className='flex items-center justify-between text-sm font-medium text-neutral-500 dark:text-neutral-400  hover:bg-neutral-300 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-neutral-100 px-2 py-1.5 rounded w-full text-left transition duration-100 ease-out'
+                className='flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400  hover:bg-neutral-300 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-neutral-100 px-2 py-1.5 rounded w-full text-left transition duration-100 ease-out'
                 id='Delete' 
                 onClick={handleClick}
             >
@@ -44,13 +44,13 @@ export default function ContextMenu({ id, handleClick, showSubMenu, folders, but
             <Submenu
                 label="Move to"
                 arrow={<></>}
-                className='flex items-center justify-between text-sm font-medium text-neutral-500 dark:text-neutral-400  hover:bg-neutral-300 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-neutral-100 px-2 py-1.5 rounded w-full text-left transition duration-100 ease-out'
+                className='flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400  hover:bg-neutral-300 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-neutral-100 px-2 py-1.5 rounded w-full text-left transition duration-100 ease-out'
             >
                 {folders.map((folder, index) => (
                     <Item
                         hidden
                         key={index}
-                        className='flex items-center justify-between text-sm font-medium text-neutral-500 dark:text-neutral-400  hover:bg-neutral-300 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-neutral-100 px-2 py-1.5 rounded w-full text-left'
+                        className='flex items-center justify-between text-xs font-medium text-neutral-500 dark:text-neutral-400  hover:bg-neutral-300 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-neutral-100 px-2 py-1.5 rounded w-full text-left'
                         id={folder}
                         onClick={handleClick}
                     >

@@ -1,4 +1,3 @@
-
 export const useDatastore = (set, get) => ({
   bookmarks: {
     uncategorized: {
@@ -51,8 +50,10 @@ export const useDatastore = (set, get) => ({
       bookmarks: {
         ...state.bookmarks,
         [folderName]: {
-          saved: state.bookmarks[folderName].saved.filter((_, i) => i !== index),
-          properties: {...state.bookmarks[folderName].properties, },
+          saved: state.bookmarks[folderName].saved.filter(
+            (_, i) => i !== index
+          ),
+          properties: { ...state.bookmarks[folderName].properties },
         },
       },
     }));
@@ -64,8 +65,10 @@ export const useDatastore = (set, get) => ({
         bookmarks: {
           ...state.bookmarks,
           [fromFolder]: {
-            saved: state.bookmarks[fromFolder].saved.filter((_, i) => i !== index),
-            properties: { ...state.bookmarks[fromFolder].properties,},
+            saved: state.bookmarks[fromFolder].saved.filter(
+              (_, i) => i !== index
+            ),
+            properties: { ...state.bookmarks[fromFolder].properties },
           },
           [toFolder]: {
             saved: [bookmark, ...state.bookmarks[toFolder].saved],
@@ -85,11 +88,30 @@ export const useDatastore = (set, get) => ({
         bookmarks: {
           ...state.bookmarks,
           [folderName]: {
-            saved: state.bookmarks[folderName].saved.map((b, i) => (i === index ? bookmark : b)),
+            saved: state.bookmarks[folderName].saved.map((b, i) =>
+              i === index ? bookmark : b
+            ),
             properties: { ...state.bookmarks[folderName].properties },
           },
         },
       };
-    })
-  }
+    });
+  },
+  updateBookmarks: (url, data, folderName) => {
+    set((state) => {
+      const updatedBookmarks = state.bookmarks[folderName].saved.map(
+        (bookmark) =>
+          bookmark.link === url ? { ...bookmark, ...data } : bookmark
+      );
+      return {
+        bookmarks: {
+          ...state.bookmarks,
+          [folderName]: {
+            saved: updatedBookmarks,
+            properties: { ...state.bookmarks[folderName].properties },
+          },
+        },
+      };
+    });
+  },
 });
